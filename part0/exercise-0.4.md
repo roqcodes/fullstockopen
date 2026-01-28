@@ -1,25 +1,17 @@
 sequenceDiagram
-    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    participant browser
+    participant server
+
+    Note right of browser: User writes a note in the text field and clicks Save button
+    
+    Note right of browser: JavaScript prevents default form submission and handles the event
+    
+    Note right of browser: JavaScript adds the new note to the notes array and re-renders the list
+    
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
     activate server
-    server-->>browser: HTTP 302 Found (Location: /exampleapp/notes)
+    Note left of server: Server saves the new note
+    server-->>browser: {"message": "note created"}
     deactivate server
     
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
-    activate server
-    server-->>browser: HTML document
-    deactivate server
-    
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
-    activate server
-    server-->>browser: CSS file
-    deactivate server
-    
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
-    activate server
-    server-->>browser: JavaScript file
-    deactivate server
-    
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
-    activate server
-    server-->>browser: JSON data [{ content: "note", date: "2023-1-1" }, ...]
-    deactivate server
+    Note right of browser: The browser stays on the same page, no reload needed. The new note is already visible.
