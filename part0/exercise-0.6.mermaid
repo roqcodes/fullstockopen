@@ -1,12 +1,22 @@
 sequenceDiagram
     participant browser
     participant server
+    participant admin
 
     Note right of browser: User writes a note in the text field and clicks Save button
     
     Note right of browser: JavaScript prevents default form submission and handles the event
     
     Note right of browser: JavaScript creates the new note object and adds it to the notes array, then re-renders the list on the page
+
+    admin->>server: Admin and server connected
+    activate server
+    Note right of admin: Admin request access to server
+
+    server->>admin: Server confirmed connection with admin
+    Note right of server: server connected successfully
+    deactivate server
+
     
     browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
     activate server
